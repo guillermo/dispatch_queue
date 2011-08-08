@@ -17,13 +17,16 @@ USAGE
 
 * The explicit way:
 
-    my_work_queue = DispatchQueue.new(lambda{ sleep 3 ; 5},  lambda{ 10 })
-    my_work_queue.sort #=> [5, 10]
+```ruby
+my_work_queue = DispatchQueue.new(lambda{ sleep 3 ; 5},  lambda{ 10 })
+my_work_queue.sort #=> [5, 10]
+```
 
 * The implicit way:
 
-    DQ[ lambda{ sleep 5 ; 3} , Proc.new{ sleep 6; 2 } ].sort #=> [2,3]
-
+```ruby
+DQ[ lambda{ sleep 5 ; 3} , Proc.new{ sleep 6; 2 } ].sort #=> [2,3]
+```
 
 LICENSE
 =======
