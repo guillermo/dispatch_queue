@@ -1,5 +1,5 @@
 class DispatchQueue
-  VERSION = "1.0.1"
+  VERSION = "1.0.4"
   include Enumerable
 
   class << self
@@ -15,8 +15,10 @@ class DispatchQueue
   end
 
   def each
-    @all = @procs.map do |proc|
-      Thread.new{ proc.call }.value.tap{|value| yield value}
+    @procs.map do |proc|
+      Thread.new{ proc.call }
+    end.map do |thread|
+      yield thread.value
     end
   end
 end

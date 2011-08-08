@@ -28,6 +28,39 @@ my_work_queue.sort #=> [5, 10]
 DQ[ lambda{ sleep 5 ; 3} , Proc.new{ sleep 6; 2 } ].sort #=> [2,3]
 ```
 
+
+REALCODE
+=======
+
+```ruby
+class DispatchQueue
+  include Enumerable
+
+  class << self
+    alias :[] :new
+  end
+
+  def initialize(*array)
+    @procs = array
+  end
+
+  def <<(new_one)
+    @procs << new_one
+  end
+
+  def each
+    @procs.map do |proc|
+      Thread.new{ proc.call }
+    end.map do |thread|
+      yield thread.value
+    end
+  end
+end
+
+
+DQ = DispatchQueue
+```
+
 LICENSE
 =======
 
