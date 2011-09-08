@@ -10,7 +10,4 @@ class DispatchQueueTest < Test::Unit::TestCase
     assert_equal [3,4], DQ[lambda{ sleep 0.1; 4}, lambda{ 3}].sort
   end
 
-  def test_it_is_enumerable
-    assert DQ.included_modules.include?(Enumerable)
-  end
 end
