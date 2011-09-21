@@ -29,11 +29,21 @@ module ArrayThreadedEnumerable
     }
     values
   end
-
 end
 
 Array.send(:include, ArrayThreadedEnumerable)
 
-
 DQ = DispatchQueue
+
+if RUBY_VERSION < "1.8.9999"
+  class Thread
+    def self.exclusive
+      old_value = Thread.critical
+      Thread.critical = true
+      yield
+    ensure
+      Thread.critical = old_value
+    end
+  end
+end
 
