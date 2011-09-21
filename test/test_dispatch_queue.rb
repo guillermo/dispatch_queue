@@ -22,7 +22,7 @@ class DispatchQueueTest < Test::Unit::TestCase
   end
 
   def test_threaded_map
-    assert_equal [2,4,6], [1,2,3].threaded_map{|a| a*2}
+    assert_equal [2,4,6], [1,2,3].threaded_map{|a| a*2}.sort
   end
 
 end
