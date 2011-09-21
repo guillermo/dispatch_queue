@@ -10,4 +10,19 @@ class DispatchQueueTest < Test::Unit::TestCase
     assert_equal [3,4], DQ[lambda{ sleep 0.1; 4}, lambda{ 3}].sort
   end
 
+  def test_threaded_each
+    results = []
+
+    [1,2,3].threaded_each { |value|
+      value *= 2
+      Thread.exclusive{ results << value }
+    }
+
+    assert_equal [2,4,6], results.sort
+  end
+
+  def test_threaded_map
+    assert_equal [2,4,6], [1,2,3].threaded_map{|a| a*2}
+  end
+
 end
